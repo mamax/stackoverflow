@@ -2,6 +2,8 @@ require 'rails_helper'
 
 describe "StaticPages" do
 
+  let(:base_title) { "Stackoverflow" }
+
   describe "Home page" do
 
     it "should have the content 'Home'" do
@@ -10,7 +12,7 @@ describe "StaticPages" do
     end
     it "should have the title 'Home'" do
       visit '/static_pages/home'
-      expect(page).to have_title("Stackoverflow | Home")
+      expect(page).to have_title("#{base_title} | Home")
     end
   end
 
@@ -22,7 +24,7 @@ describe "StaticPages" do
     end
     it "should have the title 'Help'" do
       visit '/static_pages/help'
-      expect(page).to have_title("Stackoverflow | Help")
+      expect(page).to have_title("#{base_title} | Help")
     end
   end
 end

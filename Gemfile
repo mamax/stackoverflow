@@ -7,6 +7,8 @@ gem 'rails', '4.2.1'
 gem 'pg', '0.18.2'
 # # Use bootstrap for creating dynamic web pages
 gem 'bootstrap-sass', '2.3.2.0'
+#for encryption password
+gem 'bcrypt-ruby', '3.1.5'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets

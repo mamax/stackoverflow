@@ -1,10 +1,11 @@
 require 'rails_helper'
-
 require 'spec_helper'
 
 describe User do
 
-  before { @user = User.new(name: "Example User", email: "user@example.com", date_of_birth: "2012-08-09", country: "Ukraine", city: "Vinnytsia") }
+  # let(:found_user) { User.find_by(email: @user.email) }
+
+  before { @user = User.new(name: "Example User", email: "user@example.com", date_of_birth: "2012-08-09", country: "Ukraine", city: "Vinnytsia", password: "foobar", password_confirmation: "foobar") }
 
   subject { @user }
 
@@ -15,7 +16,11 @@ describe User do
   it { should respond_to(:country) }
   it { should respond_to(:city) }
   it { should respond_to(:address) }
+  it { should respond_to(:password_digest) }
+  it { should respond_to(:password) }
+  it { should respond_to(:password_confirmation) }
 
+  it { should respond_to(:authenticate) }
 
   describe "when name is not present" do
     before { @user.name = " " }
@@ -57,6 +62,17 @@ describe User do
     it { should_not be_valid }
   end
 
+  describe "when email format is valid" do
+    before do
+      addresses = %w[user@foo.COM A_US-ER@f.b.org frst.lst@foo.jp a+b@baz.cn]
+      addresses.each do |valid_address|
+        @user.email = valid_address
+        expect(@user).to be_valid
+      end
+      it { should be_valid }
+    end
+  end
+
   describe "when email format is invalid" do
     it "should be invalid" do
       addresses = %w[user@foo,com user_at_foo.org example.user@foo.
@@ -73,8 +89,24 @@ describe User do
       user_with_same_email = @user.dup
       user_with_same_email.save
     end
-
     it { should_not be_valid }
   end
 
+  #tests for password
+  describe "when password is not present" do
+    before do
+      @user = User.new(name: "Example User", email: "user@example.com", date_of_birth: "2012-08-09", country: "Ukraine", city: "Vinnytsia", password: "foobar", password_confirmation: "foobar")
+    end
+    it { should_not be_valid }
+  end
+
+  describe "when password doesn't match confirmation" do
+    before { @user.password_confirmation = "mismatch" }
+    it { should_not be_valid }
+  end
+
+  describe "with a password that's too short" do
+    before { @user.password = @user.password_confirmation = "a" * 5 }
+    it { should be_invalid }
+  end
 end

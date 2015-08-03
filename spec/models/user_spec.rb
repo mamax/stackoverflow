@@ -3,8 +3,6 @@ require 'spec_helper'
 
 describe User do
 
-  # let(:found_user) { User.find_by(email: @user.email) }
-
   before { @user = User.new(name: "Example User", email: "user@example.com", date_of_birth: "2012-08-09", country: "Ukraine", city: "Vinnytsia", address: "Zankovetska", password: "foobar", password_confirmation: "foobar") }
 
   subject { @user }
@@ -19,8 +17,13 @@ describe User do
   it { should respond_to(:password_digest) }
   it { should respond_to(:password) }
   it { should respond_to(:password_confirmation) }
-
+  it { should respond_to(:remember_token) }
   it { should respond_to(:authenticate) }
+
+  describe "remember token" do
+    before { @user.save }
+    it { expect(@user.remember_token).not_to be_blank }
+  end
 
   describe "when name is not present" do
     before { @user.name = " " }

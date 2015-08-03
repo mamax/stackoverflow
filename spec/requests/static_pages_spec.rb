@@ -39,6 +39,4 @@ describe "StaticPages" do
     click_link "Help"
     expect(page).to have_title(full_title('Help'))
   end
-
-
 end

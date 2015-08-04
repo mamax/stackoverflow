@@ -7,5 +7,9 @@ FactoryGirl.define do
     sequence(:city)  { |n| "Vinnytsia_#{n}" }
     sequence(:address) { |n| "Zankovetska_#{n}"}
     password  "foobar"
+
+    factory :admin do
+      admin true
+      end
   end
 end

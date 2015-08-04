@@ -11,7 +11,6 @@ describe "Authentication" do
     it { should have_title('Sign in') }
   end
 
-
   describe "signin" do
     before { visit signin_path }
 

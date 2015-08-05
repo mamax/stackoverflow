@@ -33,6 +33,15 @@ describe User do
     it { should be_admin }
   end
 
+  describe "with moderator attribute set to 'true'" do
+    before do
+      @user.save!
+      @user.toggle!(:moderator)
+    end
+
+    it { should be_moderator }
+  end
+
   describe "remember token" do
     before { @user.save }
     it { expect(@user.remember_token).not_to be_blank }

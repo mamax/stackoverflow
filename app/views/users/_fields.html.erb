@@ -1,22 +1,22 @@
 <%= render 'shared/error_messages' %>
 
 <%= f.label :name %>
-<%= f.text_field :name %>
+<%= f.text_field :name, placeholder: "Enter your name..." %>
 
 <%= f.label :email %>
-<%= f.text_field :email %>
+<%= f.text_field :email, placeholder: "Enter your email..." %>
 
 <%= f.label :date_of_birth %>
-<%= f.text_field :date_of_birth %>
+<%= f.text_field :date_of_birth, placeholder: "Example: 2012-08-09" %>
 
 <%= f.label :country %>
-<%= f.text_field :country %>
+<%= f.text_field :country, placeholder: "Enter your country..." %>
 
 <%= f.label :city %>
-<%= f.text_field :city %>
+<%= f.text_field :city, placeholder: "Enter your city..." %>
 
 <%= f.label :address %>
-<%= f.text_field :address %>
+<%= f.text_field :address, placeholder: "Eneter your address..." %>
 
 <%= f.label :password %>
 <%= f.password_field :password %>

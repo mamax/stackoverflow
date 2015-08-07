@@ -25,6 +25,7 @@ namespace :db do
                    address: address,
                    password: password,
                    password_confirmation: password)
+
     end
   end
 
@@ -56,5 +57,15 @@ namespace :db do
                          moderator: true)
 
 
+  end
+
+  desc "Fill database with sample data - add microposts"
+  task add_microposts: :environment do
+      users = User.all
+      #(limit: 6)
+    10.times do
+      content = Faker::Lorem.sentence(5)
+      users.each { |user| user.microposts.create!(content: content) }
+    end
   end
 end

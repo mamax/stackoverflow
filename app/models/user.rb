@@ -36,7 +36,9 @@ class User < ActiveRecord::Base
   end
 
   def follow!(other_user)
-    self.reverse_relationships.create(followed_id: other_user.id)
+    self.relationships.create(followed_id: other_user.id)
+    # self.relationships.create!(followed_id: other_user.id)
+    # self.relationships.find_by(followed_id: other_user.id).create!
   end
 
   def unfollow!(other_user)

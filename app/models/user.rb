@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
   end
 
   def feed
-    microposts
+    Micropost.from_users_followed_by(self)
   end
 
   def following?(other_user)
@@ -36,7 +36,7 @@ class User < ActiveRecord::Base
   end
 
   def follow!(other_user)
-    self.relationships.create!(followed_id: other_user.id)
+    self.reverse_relationships.create(followed_id: other_user.id)
   end
 
   def unfollow!(other_user)

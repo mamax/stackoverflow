@@ -7,7 +7,7 @@ namespace :db do
   end
 end
 def make_users
-  admin = User.create!(name: "Example User",
+  admin = User.create!(name: "Admin",
                        email: "example@railstutorial.org",
                        date_of_birth: "2003-08-08",
                        country: "Ukraine",
@@ -27,7 +27,7 @@ def make_users
                            password_confirmation: "foobar",
                            moderator: true)
     9.times do |n|
-      name  = "Exampl User-#{n+1}"
+      name  = "User-#{n+1}"
       email = "exampl-#{n+1}@railstutorial.org"
       date_of_birth = "1993-08-08"
       country = "Ukraine-#{n+1}"

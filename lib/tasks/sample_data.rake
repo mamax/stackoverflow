@@ -1,16 +1,33 @@
 namespace :db do
-  desc "Fill database with sample data - users"
-  task add_users: :environment do
-    User.create!(name: "Example User",
-                 email: "exampl@railstutorial.org",
-                 date_of_birth: "2003-08-08",
-                 country: "Ukraine",
-                 city: "Vinnitsa",
-                 address: "Zankovetska",
-                 password: "foobar",
-                 password_confirmation: "foobar")
+  desc "Fill database with sample data"
+  task fill_db: :environment do
+    make_users
+    make_microposts
+    make_relationships
+  end
+end
+def make_users
+  admin = User.create!(name: "Example User",
+                       email: "example@railstutorial.org",
+                       date_of_birth: "2003-08-08",
+                       country: "Ukraine",
+                       city: "Vinnitsa",
+                       address: "Zankovetska",
+                       password: "foobar",
+                       password_confirmation: "foobar",
+                       admin: true)
+
+  moderator = User.create!(name: "Moderator",
+                           email: "moderator@railstutorial.org",
+                           date_of_birth: "2003-08-09",
+                           country: "Ukraine1",
+                           city: "Vinnitsa1",
+                           address: "Zankovetska1",
+                           password: "foobar",
+                           password_confirmation: "foobar",
+                           moderator: true)
     9.times do |n|
-      name  = "ExamplUser-#{n+1}"
+      name  = "Exampl User-#{n+1}"
       email = "exampl-#{n+1}@railstutorial.org"
       date_of_birth = "1993-08-08"
       country = "Ukraine-#{n+1}"
@@ -27,45 +44,23 @@ namespace :db do
                    password_confirmation: password)
 
     end
-  end
-
-  desc "Fill database with sample data - admin"
-  task add_admin: :environment do
-    admin = User.create!(name: "Example User",
-                         email: "example@railstutorial.org",
-                         date_of_birth: "2003-08-08",
-                         country: "Ukraine",
-                         city: "Vinnitsa",
-                         address: "Zankovetska",
-                         password: "foobar",
-                         password_confirmation: "foobar",
-                         admin: true)
+end
 
 
-  end
-
-  desc "Fill database with sample data - moderator"
-  task add_moderator: :environment do
-    moderator = User.create!(name: "Moderator",
-                         email: "moderator@railstutorial.org",
-                         date_of_birth: "2003-08-09",
-                         country: "Ukraine1",
-                         city: "Vinnitsa1",
-                         address: "Zankovetska1",
-                         password: "foobar",
-                         password_confirmation: "foobar",
-                         moderator: true)
-
-
-  end
-
-  desc "Fill database with sample data - add microposts"
-  task add_microposts: :environment do
+  def make_microposts
       users = User.all
       #(limit: 6)
-    10.times do
+    9.times do
       content = Faker::Lorem.sentence(5)
       users.each { |user| user.microposts.create!(content: content) }
     end
   end
-end
+
+  def make_relationships
+      users = User.all
+      user = users.first
+      followed_users = users[2..9]
+      followers = users[3..5]
+      followed_users.each { |followed| user.follow!(followed) }
+      followers.each      { |follower| follower.follow!(user) }
+  end
